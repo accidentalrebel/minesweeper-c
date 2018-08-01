@@ -1,2 +1,0 @@
-SET PATH=%PATH%;C:\TC
-eTCC.EXE -IINCLUDE -LLIB -nBIN src\hello.c
