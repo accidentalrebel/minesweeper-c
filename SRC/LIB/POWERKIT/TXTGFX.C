@@ -1,5 +1,5 @@
 #include <STDIO.H>
 
-void testGfx() {
+void testGfx(){
   printf("\ntestGfx called.");
-}
+}
