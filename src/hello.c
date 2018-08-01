@@ -5,14 +5,10 @@ void test()
 {
   union REGS in, out;
 
-  int oldMode;
-  printf("Hello");
-
-  in.h.ah=0xf;
-  int86(0x10, &in, &out);
-  oldMode=out.h.al;
-
-  printf("OldMode: %d", oldMode);
+  in.h.ah = 0x2;
+  in.h.dl = 0x42;
+  intdos(&in, &out);
+  printf("\nCharacter: %d\n", out.h.al);
 }
 
 int main()

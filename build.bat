@@ -1,0 +1,2 @@
+SET PATH=%PATH%;C:\TC
+TCC.EXE -IINCLUDE -LLIB -nBIN src\hello.c
