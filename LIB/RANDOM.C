@@ -7,17 +7,17 @@ unsigned int xorShift32(unsigned int x)
 }
 
 /* Returns from 1 to 100 */
-unsigned int random(unsigned int seed)
+unsigned int random(unsigned int *seed)
 {
   unsigned int max = 0;
-  unsigned int random = xorShift32(seed);
+  unsigned int random = xorShift32(*seed);
   float computation = 0;
 
-  max = max - 1; /* We get the highest size of unsigned int */
+  *seed = random;
 
-  computation = (max / random);
-  computation = 1 / computation;
-  random = computation * 100;
+  max = max - 1; /* We get the highest size of unsigned int */
+  computation = (float)random / max;
+  computation = computation * 100;
   
-  return random;
+  return computation;
 }

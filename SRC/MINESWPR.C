@@ -5,7 +5,7 @@
 int main(){
   unsigned int i;
   unsigned int result;
-  unsigned int currentSeed;
+  unsigned int *currentSeed = 0;
   
   unsigned int startX = (screenWidth / 2) - (boardWidth / 2);
   unsigned int startY = (screenHeight / 2) - (boardHeight / 2);
@@ -20,7 +20,7 @@ int main(){
     placeCharAt(0xF9, 0x43, startX, startY + i, boardWidth);
   }
 
-  currentSeed = 47776;
+  *currentSeed = 47776;
   for ( i = 0 ; i < 10 ; i++ ) {
     result = random(currentSeed);
     printf("\nResult %d: %u", i, result);
