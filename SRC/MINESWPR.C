@@ -1,18 +1,21 @@
 #include <STDIO.H>
 #include <DOS.H>
 #include "SRC/MINESWPR.H"
-#include "SRC/LIB/POWERKIT/POWERKIT.H"
 
 int main(){
-  testAssembly();
-  testGfx();
-  return 0;
-}
+  unsigned int i;
+  
+  unsigned int startX = (screenWidth / 2) - (boardWidth / 2);
+  unsigned int startY = (screenHeight / 2) - (boardHeight / 2);
 
-void testAssembly() {
-  union REGS in, out;
-  in.h.ah = 0x2;
-  in.h.dl = 0x42;
-  intdos(&in, &out);
-  printf("\nCharacter: %d\n", out.h.al);
+  /* Draw the back board */
+  for ( i = 0 ; i < boardHeight ; i++ ) {
+    placeCharAt('=', startX - 1, startY + i, boardWidth + 2);
+  }
+  
+  /* Draw the actual board */
+  for ( i = 0 ; i < boardHeight ; i++ ) {
+    placeCharAt('X', startX, startY + i, boardWidth);
+  }
+  return 0;
 }
