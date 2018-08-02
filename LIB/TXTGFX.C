@@ -1,6 +1,6 @@
 #include <STDIO.H>
 #include <DOS.H>
-#include "LIB/POWERKIT.H"
+#include "LIB/TXTGFX.H"
 
 void placeCharAt(char c, unsigned int color, unsigned int x, unsigned int y, unsigned int num) {
   union REGS in, out;

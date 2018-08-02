@@ -1,16 +1,10 @@
-unsigned int xorShift32(unsigned int x)
-{
-  x ^= x << 13;
-  x ^= x >> 17;
-  x ^= x << 5;
-  return x;
-}
+#include "LIB/RANDOM.H"
 
 /* Returns from 1 to 100 */
 unsigned int random(unsigned int *seed)
 {
   unsigned int max = 0;
-  unsigned int random = xorShift32(*seed);
+  unsigned int random = xorShift(*seed);
   float computation = 0;
 
   *seed = random;
@@ -20,4 +14,12 @@ unsigned int random(unsigned int *seed)
   computation = computation * 100;
   
   return computation;
+}
+
+unsigned int xorShift(unsigned int x)
+{
+  x ^= x << 13;
+  x ^= x >> 17;
+  x ^= x << 5;
+  return x;
 }

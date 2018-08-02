@@ -1,8 +1,10 @@
 #include <STDIO.H>
 #include <DOS.H>
 #include "SRC/MINESWPR.H"
+#include "LIB/TXTGFX.H"
+#include "LIB/RANDOM.H"
 
-int main(){
+int main() {
   unsigned int i;
   unsigned int result;
   unsigned int *currentSeed = 0;
@@ -28,15 +30,15 @@ int main(){
 
   /* Generates 15008 */
 
-  result = xorShift32(323232);
+  result = xorShift(323232);
   printf("\nResult 1: %u", result);
-  result = xorShift32(result);
+  result = xorShift(result);
   printf("\nResult 2: %u", result);
-  result = xorShift32(result);
+  result = xorShift(result);
   printf("\nResult 3: %u", result);
-  result = xorShift32(result);
+  result = xorShift(result);
   printf("\nResult 4: %u", result);
-  result = xorShift32(result);
+  result = xorShift(result);
   printf("\nResult 5: %u", result);
   
   return 0;
