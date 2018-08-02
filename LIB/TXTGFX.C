@@ -2,7 +2,7 @@
 #include <DOS.H>
 #include "LIB/POWERKIT.H"
 
-void placeCharAt(char c, unsigned int x, unsigned int y, unsigned int num) {
+void placeCharAt(char c, unsigned int color, unsigned int x, unsigned int y, unsigned int num) {
   union REGS in, out;
   
   placeCursorAt(x, y);
@@ -10,7 +10,7 @@ void placeCharAt(char c, unsigned int x, unsigned int y, unsigned int num) {
   in.h.ah = 0x9;
   in.h.al = c;
   in.h.bh = 0x0;
-  in.h.bl = 0x31;
+  in.h.bl = color;
   in.x.cx = num;
   int86(0x10, &in, &out);
 }

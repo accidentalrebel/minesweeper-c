@@ -9,13 +9,13 @@ int main(){
   unsigned int startY = (screenHeight / 2) - (boardHeight / 2);
 
   /* Draw the back board */
-  for ( i = 0 ; i < boardHeight ; i++ ) {
-    placeCharAt('=', startX - 1, startY + i, boardWidth + 2);
+  for ( i = 0 ; i < boardHeight + 2 ; i++ ) {
+    placeCharAt(0xF0, 0x30, startX - 1, startY + i - 1, boardWidth + 2);
   }
   
   /* Draw the actual board */
   for ( i = 0 ; i < boardHeight ; i++ ) {
-    placeCharAt('X', startX, startY + i, boardWidth);
+    placeCharAt(0xF9, 0x43, startX, startY + i, boardWidth);
   }
   return 0;
 }
