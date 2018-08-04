@@ -5,8 +5,7 @@
 #include "LIB/RANDOM.H"
 
 int main() {
-  unsigned int i;
-  unsigned int result;
+  unsigned int i, col, row;
   unsigned long *currentSeed = 0;
   unsigned long longSeed = 0;
   
@@ -24,14 +23,17 @@ int main() {
   }
 
   *currentSeed = 3232326542301;
-  for ( i = 0 ; i < 100 ; i++ ) {
-    result = random(currentSeed);
-    printf("%u, ", result);
+  for ( i = 0 ; i < 10 ; i++ ) {
+    col = randomRange(currentSeed, 0, boardWidth);
+    row = randomRange(currentSeed, 0, boardHeight);
+
+    printf("\nCol: %u, Row: %u", col, row);
+
+    placeCharAt('0', 0x03, startX + col, startY + row, 1);
+    
+    /*printf("%u, ", result);*/
   }
 
-  *currentSeed = 323232;
-  printf("\nRandomRangeResult: %u", randomRange(currentSeed, 50, 75));
-  
   /* Generates 15008 */
 
   /*
