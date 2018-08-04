@@ -23,11 +23,14 @@ int main() {
     placeCharAt(0xF9, 0x43, startX, startY + i, boardWidth);
   }
 
-  *currentSeed = 1;
+  *currentSeed = 3232326542301;
   for ( i = 0 ; i < 100 ; i++ ) {
     result = random(currentSeed);
     printf("%u, ", result);
   }
+
+  *currentSeed = 323232;
+  printf("\nRandomRangeResult: %u", randomRange(currentSeed, 50, 75));
   
   /* Generates 15008 */
 

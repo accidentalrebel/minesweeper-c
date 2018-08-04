@@ -17,6 +17,21 @@ unsigned int random(unsigned long *seed)
   return computation;
 }
 
+/*
+  randomRange(132416, 50, 75);
+ */
+unsigned int randomRange(unsigned long *seed, unsigned int min, unsigned int max)
+{
+  unsigned int num, range;
+
+  num = random(seed);
+  printf("\n\nRandomReturned: %u", num);
+  
+  range = max - min;
+  
+  return min + ((num * range) / 100);
+}
+
 unsigned long xorShiftLong(unsigned long x)
 {
   x ^= x << 13;
