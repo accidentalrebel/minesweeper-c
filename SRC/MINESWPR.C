@@ -7,7 +7,8 @@
 int main() {
   unsigned int i;
   unsigned int result;
-  unsigned int *currentSeed = 0;
+  unsigned long *currentSeed = 0;
+  unsigned long longSeed = 0;
   
   unsigned int startX = (screenWidth / 2) - (boardWidth / 2);
   unsigned int startY = (screenHeight / 2) - (boardHeight / 2);
@@ -22,14 +23,15 @@ int main() {
     placeCharAt(0xF9, 0x43, startX, startY + i, boardWidth);
   }
 
-  *currentSeed = 47776;
-  for ( i = 0 ; i < 10 ; i++ ) {
+  *currentSeed = 1;
+  for ( i = 0 ; i < 100 ; i++ ) {
     result = random(currentSeed);
-    printf("\nResult %d: %u", i, result);
+    printf("%u, ", result);
   }
-
+  
   /* Generates 15008 */
 
+  /*
   result = xorShift(323232);
   printf("\nResult 1: %u", result);
   result = xorShift(result);
@@ -40,6 +42,7 @@ int main() {
   printf("\nResult 4: %u", result);
   result = xorShift(result);
   printf("\nResult 5: %u", result);
+  */
   
   return 0;
 }

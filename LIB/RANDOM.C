@@ -1,22 +1,23 @@
 #include "LIB/RANDOM.H"
 
 /* Returns from 1 to 100 */
-unsigned int random(unsigned int *seed)
+unsigned int random(unsigned long *seed)
 {
-  unsigned int max = 0;
-  unsigned int random = xorShift(*seed);
+  unsigned long max = 0;
+  unsigned long random = xorShiftLong(*seed);
   float computation = 0;
 
   *seed = random;
-
-  max = max - 1; /* We get the highest size of unsigned int */
+  /*printf("\nSeed: %u", *seed);*/
+  
+  max = max - 1; /* We get the highest capacity of the variable */
   computation = (float)random / max;
   computation = computation * 100;
   
   return computation;
 }
 
-unsigned int xorShift(unsigned int x)
+unsigned long xorShiftLong(unsigned long x)
 {
   x ^= x << 13;
   x ^= x >> 17;
