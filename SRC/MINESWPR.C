@@ -22,17 +22,19 @@ int main() {
     placeCharAt(0xF9, 0x43, startX, startY + i, boardWidth);
   }
 
-  *currentSeed = 3232326542301;
+  *currentSeed = getInitialSeed();
   for ( i = 0 ; i < 10 ; i++ ) {
     col = randomRange(currentSeed, 0, boardWidth);
     row = randomRange(currentSeed, 0, boardHeight);
 
-    printf("\nCol: %u, Row: %u", col, row);
+    /* printf("\nCol: %u, Row: %u", col, row); */
 
     placeCharAt('0', 0x03, startX + col, startY + row, 1);
     
     /*printf("%u, ", result);*/
   }
+
+
 
   /* Generates 15008 */
 
