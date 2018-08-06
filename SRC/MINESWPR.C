@@ -12,6 +12,7 @@ int main() {
   unsigned int startX = (screenWidth / 2) - (boardWidth / 2);
   unsigned int startY = (screenHeight / 2) - (boardHeight / 2);
 
+  /* Flushes the background to black */
   placeCharAt(0x0, 0x0F, 0, 0, screenWidth * screenHeight);
 
   /* Draw the back board */
