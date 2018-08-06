@@ -24,3 +24,28 @@ void placeCursorAt(unsigned int x, unsigned int y) {
   in.h.dh = y;
   int86(0x10, &in, &out);
 }
+
+unsigned int getCharAt(unsigned int x, unsigned int y) {
+  union REGS in, out;
+
+  placeCursorAt(x, y);
+
+  in.h.ah = 0x8;
+  in.x.bx = 0x0;
+  int86(0x10, &in, &out);
+
+  return out.h.al;
+}
+
+unsigned int getColorAt(unsigned int x, unsigned int y) {
+  union REGS in, out;
+
+  placeCursorAt(x, y);
+
+  in.h.ah = 0x8;
+  in.x.bx = 0x0;
+  int86(0x10, &in, &out);
+
+  return out.h.ah;
+}
+

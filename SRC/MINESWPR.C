@@ -15,6 +15,11 @@ int main() {
   /* Flushes the background to black */
   placeCharAt(0x0, 0x0F, 0, 0, screenWidth * screenHeight);
 
+  /* TESTING */
+  placeCharAt(0xE, 0x0C, 0, 0, 1);
+  printf("\nCharacter: %u", getCharAt(0, 0));
+  printf("\n\nColor: %u", getColorAt(0, 0));
+
   /* Draw the back board */
   for ( i = 0 ; i < boardHeight + 2 ; i++ ) {
     placeCharAt(0xF0, 0x30, startX - 1, startY + i - 1, boardWidth + 2);
