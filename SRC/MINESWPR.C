@@ -5,7 +5,7 @@
 #include "LIB/RANDOM.H"
 
 int main() {
-  unsigned int i, col, row;
+  unsigned int i, col, row, currentChar;
   unsigned long *currentSeed = 0;
   unsigned long longSeed = 0;
   
@@ -14,11 +14,6 @@ int main() {
 
   /* Flushes the background to black */
   placeCharAt(0x0, 0x0F, 0, 0, screenWidth * screenHeight);
-
-  /* TESTING */
-  placeCharAt(0xE, 0x0C, 0, 0, 1);
-  printf("\nCharacter: %u", getCharAt(0, 0));
-  printf("\n\nColor: %u", getColorAt(0, 0));
 
   /* Draw the back board */
   for ( i = 0 ; i < boardHeight + 2 ; i++ ) {
@@ -31,18 +26,19 @@ int main() {
   }
 
   *currentSeed = getInitialSeed();
-  for ( i = 0 ; i < 10 ; i++ ) {
-    col = randomRange(currentSeed, 0, boardWidth);
-    row = randomRange(currentSeed, 0, boardHeight);
+  for ( i = 0 ; i < (boardWidth * boardHeight) ; i++ ) {
 
-    /* printf("\nCol: %u, Row: %u", col, row); */
+    while ( 1 ) {
+      col = randomRange(currentSeed, 0, boardWidth);
+      row = randomRange(currentSeed, 0, boardHeight);
 
-    placeCharAt('0', 0x03, startX + col, startY + row, 1);
-    
-    /*printf("%u, ", result);*/
+      currentChar = getCharAt(startX + col, startY + row);
+      if ( currentChar != '0' ) {
+	placeCharAt('0', 0x03, startX + col, startY + row, 1);
+	break;
+      }
+    }
   }
-
-
 
   /* Generates 15008 */
 
