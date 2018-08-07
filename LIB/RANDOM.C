@@ -1,3 +1,4 @@
+#include <STDIO.H>
 #include <DOS.H>
 #include "LIB/RANDOM.H"
 
@@ -8,7 +9,9 @@ unsigned int random(unsigned long *seed)
   unsigned long random = xorShiftLong(*seed);
   float computation = 0;
 
-  *seed = random;
+  if ( random != NULL && random != 0 ) {
+    *seed = random;
+  }
   /*printf("\nSeed: %u", *seed);*/
   
   max = max - 1; /* We get the highest capacity of the variable */
@@ -43,21 +46,11 @@ unsigned long getInitialSeed()
 {
   union REGS in, out;
   unsigned long initialSeed;
-
+ 
   in.h.ah = 0x2c;
   intdos(&in, &out);
-  /*
-  printf("\n\nCH: %u\n", out.h.ch);
-  printf("\n\nCL: %u\n", out.h.cl);
-  printf("\n\nDH: %u\n", out.h.dh);
-  printf("\n\nDL: %u\n\n", out.h.dl);
-  */
 
   initialSeed = (out.h.cl + 1) * (out.h.cl + 1) * (out.h.dh + 1)  * (out.h.dl + 1) * 10000;
-
-  /*
-  printf("\nInitial seed: %ul", initialSeed);
-  */
 
   return initialSeed;
 }
