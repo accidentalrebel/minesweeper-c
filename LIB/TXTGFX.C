@@ -11,6 +11,16 @@ void changeDisplayPage(unsigned int pageNum)
   int86(0x10, &in, &out);
 }
 
+unsigned int getCurrentDisplayPage()
+{
+  union REGS in, out;
+
+  in.h.ah = 0xF;
+  int86(0x10, &in, &out);
+
+  return out.h.bh;
+}
+
 void placeCharAt(char c, unsigned int color, unsigned int x, unsigned int y, unsigned int num, unsigned int pageNum) {
   union REGS in, out;
   

@@ -2,7 +2,7 @@
 #define boardHeight 20
 #define screenWidth 80
 #define screenHeight 25
-#define startingMineCount 230
+#define startingMineCount 100
 #define CHAR_MINE '0'
 #define CHAR_BORDER 0xF0
 #define CHAR_BLANK 0xF9

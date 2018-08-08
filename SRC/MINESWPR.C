@@ -17,8 +17,11 @@ int main() {
   unsigned int startX = (screenWidth / 2) - (boardWidth / 2);
   unsigned int startY = (screenHeight / 2) - (boardHeight / 2);
 
-  /* Flushes the background to black */
+  changeDisplayPage(0);
+
+  /* Flushes the display pages to black */
   placeCharAt(0x0, 0x0F, 0, 0, screenWidth * screenHeight, 0);
+  placeCharAt(0x0, 0x0F, 0, 0, screenWidth * screenHeight, 1);
 
   /* Draw the back board */
   for ( i = 0 ; i < boardHeight + 2 ; i++ ) {
@@ -38,13 +41,13 @@ int main() {
     while ( 1 ) {
       col = randomRange(pCurrentSeed, 0, boardWidth);
       row = randomRange(pCurrentSeed, 0, boardHeight);
-
+      
       mines[i].col = col;
       mines[i].row = row;
 
-      currentChar = getCharAt(startX + col, startY + row, 0);
+      currentChar = getCharAt(startX + col, startY + row, 1);
       if ( currentChar != CHAR_MINE ) {
- 	placeCharAt(CHAR_MINE, 0x03, startX + col, startY + row, 1, 0);
+ 	placeCharAt(CHAR_MINE, 0x03, startX + col, startY + row, 1, 1);
 	break;
       }
     }
@@ -55,7 +58,18 @@ int main() {
     /* printf("Mine %u (%u, %u)", i, col, row); */
     countAdjacentLines(mines[i], startX, startY);
   }
+
+  /*
+    We are just simulating a mouse click
+   */
   
+  /*i = getCharAt(startX + 0, startX + 0, 1);*/
+  changeDisplayPage(1);
+
+  i = getCharAt(0, 0, 1);
+  printf("i: %u", i);
+
+
   return 0;
 }
 
@@ -79,9 +93,9 @@ void countAtPos(unsigned int col, unsigned int row, unsigned int startX, unsigne
 {
   unsigned int currentChar, currentColor, count;
   
-  currentChar = getCharAt(startX + col, startY + row, 0);
+  currentChar = getCharAt(startX + col, startY + row, 1);
 
-  if ( currentChar == CHAR_BLANK ) {
+  if ( currentChar == 0 ) {
     count = 0;
   }
   if ( (currentChar >= '0') && (currentChar <= '9') ) {
@@ -90,7 +104,7 @@ void countAtPos(unsigned int col, unsigned int row, unsigned int startX, unsigne
   ++count;
   
   if ( currentChar != CHAR_MINE && currentChar != CHAR_BORDER ) {
-    currentColor = getColorAt(startX + col, startY + row, 0);
-    placeCharAt(count + '0', currentColor, startX + col, startY + row, 1, 0);    
+    currentColor = getColorAt(startX + col, startY + row, 1);
+    placeCharAt(count + '0', currentColor, startX + col, startY + row, 1, 1);    
   }
 }
