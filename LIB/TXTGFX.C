@@ -2,48 +2,57 @@
 #include <DOS.H>
 #include "LIB/TXTGFX.H"
 
-void placeCharAt(char c, unsigned int color, unsigned int x, unsigned int y, unsigned int num) {
+void changeDisplayPage(unsigned int pageNum)
+{
+  union REGS in, out;
+
+  in.h.ah = 0x5;
+  in.h.al = pageNum;
+  int86(0x10, &in, &out);
+}
+
+void placeCharAt(char c, unsigned int color, unsigned int x, unsigned int y, unsigned int num, unsigned int pageNum) {
   union REGS in, out;
   
-  placeCursorAt(x, y);
+  placeCursorAt(x, y, pageNum);
 
   in.h.ah = 0x9;
   in.h.al = c;
-  in.h.bh = 0x0;
+  in.h.bh = pageNum;
   in.h.bl = color;
   in.x.cx = num;
   int86(0x10, &in, &out);
 }
 
-void placeCursorAt(unsigned int x, unsigned int y) {
+void placeCursorAt(unsigned int x, unsigned int y, unsigned int pageNum) {
   union REGS in, out;
   
   in.h.ah = 0x2;
-  in.x.bx = 0x0;
+  in.h.bh = pageNum;
   in.h.dl = x;
   in.h.dh = y;
   int86(0x10, &in, &out);
 }
 
-unsigned int getCharAt(unsigned int x, unsigned int y) {
+unsigned int getCharAt(unsigned int x, unsigned int y, unsigned int pageNum) {
   union REGS in, out;
 
-  placeCursorAt(x, y);
+  placeCursorAt(x, y, pageNum);
 
   in.h.ah = 0x8;
-  in.x.bx = 0x0;
+  in.h.bh = pageNum;
   int86(0x10, &in, &out);
 
   return out.h.al;
 }
 
-unsigned int getColorAt(unsigned int x, unsigned int y) {
+unsigned int getColorAt(unsigned int x, unsigned int y, unsigned int pageNum) {
   union REGS in, out;
 
-  placeCursorAt(x, y);
+  placeCursorAt(x, y, pageNum);
 
   in.h.ah = 0x8;
-  in.x.bx = 0x0;
+  in.h.bh = pageNum;
   int86(0x10, &in, &out);
 
   return out.h.ah;
