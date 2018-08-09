@@ -4,6 +4,7 @@
 #include "SRC/MINESWPR.H"
 #include "LIB/TXTGFX.H"
 #include "LIB/RANDOM.H"
+#include "LIB/MOUSE.H"
 
 int main() {
   unsigned int i, col, row, currentChar, currentColor;
@@ -17,6 +18,8 @@ int main() {
   unsigned int startX = (screenWidth / 2) - (boardWidth / 2);
   unsigned int startY = (screenHeight / 2) - (boardHeight / 2);
 
+  /* Initializations */
+  initMouse();
   changeDisplayPage(0);
 
   /* Flushes the display pages to black */
@@ -69,6 +72,15 @@ int main() {
   i = getCharAt(0, 0, 1);
   printf("i: %u", i);
 
+  changeDisplayPage(0);
+
+  while (1) {
+    if ( getMouseButtonDown(0) ) {
+      break;
+    }
+  }
+
+  printf("\nAt zero %u", getCharAt(0, 0, 1));
 
   return 0;
 }
