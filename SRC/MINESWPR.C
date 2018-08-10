@@ -12,6 +12,7 @@ int main() {
   unsigned long currentSeed;
 
   struct Mine mines[startingMineCount];
+  struct Mine currentMine;
   
   union REGS in, out;
   
@@ -90,6 +91,17 @@ int main() {
       showMouseCursor();
 
       if ( currentChar == CHAR_MINE ) {
+	for ( i = 0 ; i < startingMineCount ; i++ ) {
+	  currentMine = mines[i];
+	  
+	  col = currentMine.col;
+	  row = currentMine.row;
+
+	  currentChar = getCharAt(col + startX, row + startY, 1);
+	  currentColor = getColorAt(col + startX, row + startY, 1);
+	  placeCharAt(currentChar, currentColor, col + startX, row + startY, 1, 0);
+	}
+	
 	break;
       }
     }
