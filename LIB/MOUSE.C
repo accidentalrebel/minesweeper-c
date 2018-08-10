@@ -36,15 +36,9 @@ unsigned int getMouseButtonDown(unsigned int buttonNum) {
   in.x.bx = buttonNum;
   int86(0x33, &in, &out);
 
-  if ( out.x.bx > 0 ) {
-    printf("\nAX: %u", out.x.ax);
-    printf("\nBX: %u", out.x.bx);
-    printf("\nCX: %u", out.x.cx);
-    printf("\nDX: %u", out.x.dx);
-
-    if ( out.x.ax == (1 << buttonNum)) {
-      return 1;
-    }
+  if ( out.x.bx > 0 &&
+       out.x.ax == (1 << buttonNum)) {
+    return 1;
   }
 
   return 0;
@@ -52,18 +46,14 @@ unsigned int getMouseButtonDown(unsigned int buttonNum) {
 
 unsigned int getMouseButtonUp(unsigned int buttonNum) {
   union REGS in, out;
-
+  
   in.x.ax = 0x6;
   in.x.bx = buttonNum;
   int86(0x33, &in, &out);
 
   if ( out.x.bx > 0 ) {
-    printf("\nAX: %u", out.x.ax);
-    printf("\nBX: %u", out.x.bx);
-    printf("\nCX: %u", out.x.cx);
-    printf("\nDX: %u", out.x.dx); 
-    
-    if ( out.x.ax == (1 << buttonNum) ) {
+    if ( out.x.ax == 0 ) {
+      /*printf("\nBX: %u", out.x.bx); */
       return 1;
     }
   }

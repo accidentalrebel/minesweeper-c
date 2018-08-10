@@ -20,6 +20,8 @@ int main() {
 
   /* Initializations */
   initMouse();
+  setMousePos(0, 0);
+
   changeDisplayPage(0);
 
   /* Flushes the display pages to black */
@@ -75,12 +77,27 @@ int main() {
   changeDisplayPage(0);
 
   while (1) {
-    if ( getMouseButtonDown(0) ) {
+    
+    if ( getMouseButtonDown(0)) {
+      printf("LEFT PRESSED\n");
+    }
+    else if ( getMouseButtonUp(0)) {
+      printf("LEFT RELEASED\n");
+    }
+
+    if ( getMouseButtonDown(1)) {
+      printf("RIGHT PRESSED\n");
       break;
     }
+
+    /*
+    if ( getMouseButtonDown(0)) {
+      break;
+    }
+    */
   }
 
-  printf("\nAt zero %u", getCharAt(0, 0, 1));
+  printf("\nAt zero %u", getCharAt(0, 0, 0));
 
   return 0;
 }

@@ -1,0 +1,23 @@
+#include <STDIO.H>
+#include <DOS.H>
+#include "LIB/MOUSE.H"
+
+void initMouse() {
+  union REGS in, out;
+
+  /* Checks for the driver */
+  /*
+  in.x.ax = 0;
+  int86(0x33, &in, &out);
+
+  if ( out.x.ax == 0 ) {
+    printf("\n\nERROR!!! Mouse driver not detected!!!");
+    return;
+  }
+  */
+
+  /* Show the mouse */
+  
+  in.x.ax = 0x1;
+  int86(0x33, &in, &out);
+}
