@@ -95,10 +95,12 @@ int main() {
     }
 
     if ( getMouseButtonDown(1) ) {
+      hideMouseCursor();
       changeDisplayPage(1);
     }
     else if ( getMouseButtonUp(1)) {
       changeDisplayPage(0);
+      showMouseCursor();
     }
 
     /*
