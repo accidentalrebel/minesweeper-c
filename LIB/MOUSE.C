@@ -14,10 +14,22 @@ void initMouse() {
     printf("\n\nERROR!!! Mouse driver not detected!!!");
     return;
   }
+}
 
-  /* Show the mouse */
-  in.x.ax = 0x1;
-  int86(0x33, &in, &out);
+void showMouseCursor()
+{
+  union REGS reg;
+  
+  reg.x.ax = 0x1;
+  int86(0x33, &reg, &reg);
+}
+
+void hideMouseCursor()
+{
+  union REGS reg;
+  
+  reg.x.ax = 0x2;
+  int86(0x33, &reg, &reg);
 }
 
 void setMousePos(unsigned int col, unsigned int row) {

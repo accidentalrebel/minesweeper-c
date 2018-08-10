@@ -75,7 +75,7 @@ int main() {
   while (1) {
     
     if ( getMouseButtonDown(0)) {
-      
+      hideMouseCursor();
     }
     else if ( getMouseButtonUp(0)) {
       getMouseCoordinate(&col, &row);
@@ -85,7 +85,9 @@ int main() {
 
       currentChar = getCharAt(col, row, 1);
       currentColor = getColorAt(col, row, 1);
-      placeCharAt(currentChar, currentColor, col - 1, row - 1, 1, 0);
+      placeCharAt(currentChar, currentColor, col, row, 1, 0);
+
+      showMouseCursor();
     }
 
     if ( getMouseButtonUp(1)) {
