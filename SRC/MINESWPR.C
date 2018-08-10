@@ -20,6 +20,7 @@ int main() {
 
   /* Initializations */
   initMouse();
+  showMouseCursor();
   setMousePos(0, 0);
 
   changeDisplayPage(0);
@@ -86,19 +87,32 @@ int main() {
       currentChar = getCharAt(col, row, 1);
       currentColor = getColorAt(col, row, 1);
       placeCharAt(currentChar, currentColor, col, row, 1, 0);
-
       showMouseCursor();
+
+      if ( currentChar == CHAR_MINE ) {
+	break;
+      }
     }
 
+    if ( getMouseButtonDown(1) ) {
+      changeDisplayPage(1);
+    }
+    else if ( getMouseButtonUp(1)) {
+      changeDisplayPage(0);
+    }
+
+    /*
     if ( getMouseButtonUp(1)) {
       printf("RIGHT PRESSED\n");
       changeDisplayPage(1);
       break;
     }
+    */
   }
 
-  printf("\nAt zero %u", getCharAt(0, 0, 0));
-
+  changeDisplayPage(0);
+  hideMouseCursor();
+  
   return 0;
 }
 
