@@ -29,6 +29,24 @@ void setMousePos(unsigned int col, unsigned int row) {
   int86(0x33, &reg, &reg);
 }
 
+unsigned int getMousePos(unsigned int *x, unsigned int *y)
+{
+  union REGS reg;
+
+  reg.x.ax = 0x3;
+  int86(0x33, &reg, &reg);
+
+  *x = reg.x.cx;
+  *y = reg.x.dx;
+}
+
+void getMouseCoordinate(unsigned int *col, unsigned int *row)
+{
+  getMousePos(col, row);
+  *col = *col / 8;
+  *row = *row / 8;
+}
+
 unsigned int getMouseButtonDown(unsigned int buttonNum) {
   union REGS in, out;
 

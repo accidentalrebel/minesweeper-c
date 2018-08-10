@@ -69,32 +69,30 @@ int main() {
    */
   
   /*i = getCharAt(startX + 0, startX + 0, 1);*/
-  changeDisplayPage(1);
-
-  i = getCharAt(0, 0, 1);
-  printf("i: %u", i);
 
   changeDisplayPage(0);
 
   while (1) {
     
     if ( getMouseButtonDown(0)) {
-      printf("LEFT PRESSED\n");
+      
     }
     else if ( getMouseButtonUp(0)) {
-      printf("LEFT RELEASED\n");
+      getMouseCoordinate(&col, &row);
+      /*
+      printf("Col: %u, Row: %u", col, row);
+      */
+
+      currentChar = getCharAt(col, row, 1);
+      currentColor = getColorAt(col, row, 1);
+      placeCharAt(currentChar, currentColor, col - 1, row - 1, 1, 0);
     }
 
-    if ( getMouseButtonDown(1)) {
+    if ( getMouseButtonUp(1)) {
       printf("RIGHT PRESSED\n");
+      changeDisplayPage(1);
       break;
     }
-
-    /*
-    if ( getMouseButtonDown(0)) {
-      break;
-    }
-    */
   }
 
   printf("\nAt zero %u", getCharAt(0, 0, 0));
