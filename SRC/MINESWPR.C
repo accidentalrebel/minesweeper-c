@@ -7,17 +7,22 @@
 #include "LIB/MOUSE.H"
 
 int main() {
-  unsigned int i, col, row, currentChar, currentColor;
+  unsigned int i, col, row, currentChar, currentColor, mineCount;
   unsigned long *pCurrentSeed = 0;
   unsigned long currentSeed;
 
-  struct Mine mines[startingMineCount];
+  struct Mine mines[STARTING_MINE_COUNT];
   struct Mine currentMine;
-  
+
   union REGS in, out;
   
-  unsigned int startX = (screenWidth / 2) - (boardWidth / 2);
-  unsigned int startY = (screenHeight / 2) - (boardHeight / 2);
+  unsigned int startX = (SCREEN_WIDTH / 2) - (BOARD_WIDTH / 2);
+  unsigned int startY = (SCREEN_HEIGHT / 2) - (BOARD_HEIGHT / 2);
+
+  mineCount = STARTING_MINE_COUNT;
+  if ( mineCount > BOARD_WIDTH * BOARD_HEIGHT ) {
+    mineCount = BOARD_WIDTH * BOARD_HEIGHT;
+  }
 
   /* Initializations */
   initMouse();
@@ -27,27 +32,27 @@ int main() {
   changeDisplayPage(0);
 
   /* Flushes the display pages to black */
-  placeCharAt(0x0, 0x0F, 0, 0, screenWidth * screenHeight, 0);
-  placeCharAt(0x0, 0x0F, 0, 0, screenWidth * screenHeight, 1);
+  placeCharAt(0x0, 0x0F, 0, 0, SCREEN_WIDTH * SCREEN_HEIGHT, 0);
+  placeCharAt(0x0, 0x0F, 0, 0, SCREEN_WIDTH * SCREEN_HEIGHT, 1);
 
   /* Draw the back board */
-  for ( i = 0 ; i < boardHeight + 2 ; i++ ) {
-    placeCharAt(CHAR_BORDER, 0x78, startX - 1, startY + i - 1, boardWidth + 2, 0);
+  for ( i = 0 ; i < BOARD_HEIGHT + 2 ; i++ ) {
+    placeCharAt(CHAR_BORDER, 0x78, startX - 1, startY + i - 1, BOARD_WIDTH + 2, 0);
   }
 
   /* Draw the actual board */
-  for ( i = 0 ; i < boardHeight ; i++ ){ 
-    placeCharAt(CHAR_BLANK, 0x08, startX, startY + i, boardWidth, 0);
+  for ( i = 0 ; i < BOARD_HEIGHT ; i++ ){ 
+    placeCharAt(CHAR_BLANK, 0x08, startX, startY + i, BOARD_WIDTH, 0);
   }
 
   currentSeed = getInitialSeed();
   pCurrentSeed = &currentSeed;
 
-  for ( i = 0 ; i < startingMineCount ; i++ ) {
+  for ( i = 0 ; i < mineCount ; i++ ) {
 
     while ( 1 ) {
-      col = randomRange(pCurrentSeed, 0, boardWidth);
-      row = randomRange(pCurrentSeed, 0, boardHeight);
+      col = randomRange(pCurrentSeed, 0, BOARD_WIDTH);
+      row = randomRange(pCurrentSeed, 0, BOARD_HEIGHT);
       
       mines[i].col = col;
       mines[i].row = row;
@@ -60,8 +65,7 @@ int main() {
     }
   }
 
-  for ( i = 0 ; i < startingMineCount; i++ ) {
-    
+  for ( i = 0 ; i < mineCount; i++ ) {
     /* printf("Mine %u (%u, %u)", i, col, row); */
     countAdjacentLines(mines[i], startX, startY);
   }
@@ -81,28 +85,31 @@ int main() {
     }
     else if ( getMouseButtonUp(0)) {
       getMouseCoordinate(&col, &row);
-      /*
-      printf("Col: %u, Row: %u", col, row);
-      */
 
-      currentChar = getCharAt(col, row, 1);
-      currentColor = getColorAt(col, row, 1);
-      placeCharAt(currentChar, currentColor, col, row, 1, 0);
-      showMouseCursor();
+      if ( (col >= startX && col <= startX + BOARD_WIDTH - 1)
+	   && (row >= startY && row <= startY + BOARD_HEIGHT - 1)) {
+	currentChar = getCharAt(col, row, 1);
+	currentColor = getColorAt(col, row, 1);
+	placeCharAt(currentChar, currentColor, col, row, 1, 0);
+	showMouseCursor();
 
-      if ( currentChar == CHAR_MINE ) {
-	for ( i = 0 ; i < startingMineCount ; i++ ) {
-	  currentMine = mines[i];
+	if ( currentChar == CHAR_MINE ) {
+	  for ( i = 0 ; i < mineCount ; i++ ) {
+	    currentMine = mines[i];
 	  
-	  col = currentMine.col;
-	  row = currentMine.row;
+	    col = currentMine.col;
+	    row = currentMine.row;
 
-	  currentChar = getCharAt(col + startX, row + startY, 1);
-	  currentColor = getColorAt(col + startX, row + startY, 1);
-	  placeCharAt(currentChar, currentColor, col + startX, row + startY, 1, 0);
-	}
+	    currentChar = getCharAt(col + startX, row + startY, 1);
+	    currentColor = getColorAt(col + startX, row + startY, 1);
+	    placeCharAt(currentChar, currentColor, col + startX, row + startY, 1, 0);
+	  }
 	
-	break;
+	  break;
+	}
+      }
+      else {
+	showMouseCursor();
       }
     }
 
