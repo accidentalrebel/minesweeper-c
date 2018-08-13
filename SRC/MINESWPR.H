@@ -5,7 +5,7 @@
 #define startingMineCount 100
 #define CHAR_MINE 232
 #define CHAR_BORDER 0xF0
-#define CHAR_BLANK 0xF9
+#define CHAR_BLANK 254
 
 struct Mine
 {

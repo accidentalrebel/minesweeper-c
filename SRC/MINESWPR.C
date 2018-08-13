@@ -32,12 +32,12 @@ int main() {
 
   /* Draw the back board */
   for ( i = 0 ; i < boardHeight + 2 ; i++ ) {
-    placeCharAt(CHAR_BORDER, 0x30, startX - 1, startY + i - 1, boardWidth + 2, 0);
+    placeCharAt(CHAR_BORDER, 0x78, startX - 1, startY + i - 1, boardWidth + 2, 0);
   }
 
   /* Draw the actual board */
   for ( i = 0 ; i < boardHeight ; i++ ){ 
-    placeCharAt(CHAR_BLANK, 0x43, startX, startY + i, boardWidth, 0);
+    placeCharAt(CHAR_BLANK, 0x08, startX, startY + i, boardWidth, 0);
   }
 
   currentSeed = getInitialSeed();
@@ -54,7 +54,7 @@ int main() {
 
       currentChar = getCharAt(startX + col, startY + row, 1);
       if ( currentChar != CHAR_MINE ) {
- 	placeCharAt(CHAR_MINE, 0x03, startX + col, startY + row, 1, 1);
+ 	placeCharAt(CHAR_MINE, 0x4F, startX + col, startY + row, 1, 1);
 	break;
       }
     }
