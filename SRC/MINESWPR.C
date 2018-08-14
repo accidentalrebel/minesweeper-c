@@ -156,7 +156,12 @@ void countAdjacentLines(struct Mine mine, unsigned int startX, unsigned int star
 void countAtPos(unsigned int col, unsigned int row, unsigned int startX, unsigned int startY)
 {
   unsigned int currentChar, currentColor, count;
-  
+
+  currentChar = getCharAt(startX + col, startY + row, 0);
+  if ( currentChar == CHAR_BORDER ) {
+    return;
+  }
+
   currentChar = getCharAt(startX + col, startY + row, 1);
 
   if ( currentChar == 0 ) {
