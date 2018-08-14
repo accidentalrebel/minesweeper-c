@@ -119,6 +119,9 @@ int main() {
 	
 	  break;
 	}
+	else if ( !(currentChar >= '0' && currentChar <= '9') ) {
+	  floodFill(col, row, 0);
+	}
       }
       else {
 	showMouseCursor();
@@ -147,6 +150,34 @@ int main() {
   hideMouseCursor();
   
   return 0;
+}
+
+int floodFill(unsigned int col, unsigned int row, unsigned int recursiveIndex)
+{
+  unsigned int currentChar, currentColor, newCol, newRow;
+
+  ++recursiveIndex;
+  if ( recursiveIndex > BOARD_HEIGHT ) {
+    return 0;
+  }
+  
+  newCol = col;
+  newRow = row - 1;
+  
+  currentChar = getCharAt(newCol, newRow, 0);
+  if ( currentChar == CHAR_BORDER ) {
+    return 0;
+  }
+
+  currentChar = getCharAt(newCol, newRow, 1);
+  currentColor = getColorAt(newCol, newRow, 1);
+  placeCharAt(currentChar, currentColor, newCol, newRow, 1, 0);
+  
+  if ( currentChar >= '0' && currentChar <= '9' ) {
+    return 0;
+  }
+
+  return floodFill(newCol, newRow, recursiveIndex);
 }
 
 void countAdjacentLines(struct Mine mine, unsigned int startX, unsigned int startY) {
