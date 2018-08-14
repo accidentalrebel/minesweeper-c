@@ -7,7 +7,7 @@
 #include "LIB/MOUSE.H"
 
 int main() {
-  unsigned int i, col, row, currentChar, currentColor, mineCount;
+  unsigned int i, col, row, currentChar, currentColor, mineCount, tilesOpenedCount;
   unsigned long *pCurrentSeed = 0;
   unsigned long currentSeed;
 
@@ -25,6 +25,7 @@ int main() {
   }
 
   /* Initializations */
+  tilesOpenedCount = 0;
   initMouse();
   showMouseCursor();
   setMousePos(0, 0);
@@ -88,6 +89,17 @@ int main() {
 
       if ( (col >= startX && col <= startX + BOARD_WIDTH - 1)
 	   && (row >= startY && row <= startY + BOARD_HEIGHT - 1)) {
+
+	currentChar = getCharAt(col, row, 0);
+      	if ( currentChar == CHAR_BLANK ) {
+	  ++tilesOpenedCount;
+	}
+
+	if ( tilesOpenedCount >= (BOARD_WIDTH * BOARD_HEIGHT) - mineCount ) {
+	  changeDisplayPage(0);
+	  printf("WIN CONDITION");
+	}
+	
 	currentChar = getCharAt(col, row, 1);
 	currentColor = getColorAt(col, row, 1);
 	placeCharAt(currentChar, currentColor, col, row, 1, 0);
