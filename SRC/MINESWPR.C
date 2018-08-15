@@ -65,16 +65,12 @@ int main() {
   }
 
   for ( i = 0 ; i < mineCount; i++ ) {
-    /* printf("Mine %u (%u, %u)", i, col, row); */
     countAdjacentLines(mines[i], startX, startY);
   }
 
   /*
     We are just simulating a mouse click
    */
-  
-  /*i = getCharAt(startX + 0, startX + 0, 1);*/
-
   changeDisplayPage(0);
 
   while (1) {
@@ -141,14 +137,6 @@ int main() {
       changeDisplayPage(0);
       showMouseCursor();
     }
-
-    /*
-    if ( getMouseButtonUp(1)) {
-      printf("RIGHT PRESSED\n");
-      changeDisplayPage(1);
-      break;
-    }
-    */
   }
 
   changeDisplayPage(0);
@@ -157,8 +145,7 @@ int main() {
   return 0;
 }
 
-int floodFillDirection(unsigned int col, unsigned int row, unsigned int * tilesOpenedCount)
-{
+int floodFillDirection(unsigned int col, unsigned int row, unsigned int * tilesOpenedCount) {
   unsigned int frontChar, backChar, currentColor, newCol, newRow;
 
   newCol = col;
@@ -182,8 +169,7 @@ int floodFillDirection(unsigned int col, unsigned int row, unsigned int * tilesO
   floodFill(newCol, newRow, tilesOpenedCount);
 }
 
-int floodFill(unsigned int col, unsigned int row, unsigned int * tilesOpenedCount)
-{
+int floodFill(unsigned int col, unsigned int row, unsigned int * tilesOpenedCount) {
   floodFillDirection(col, row - 1, tilesOpenedCount);
   floodFillDirection(col + 1, row, tilesOpenedCount);
   floodFillDirection(col, row + 1, tilesOpenedCount);
@@ -206,8 +192,7 @@ void countAdjacentLines(struct Mine mine, unsigned int startX, unsigned int star
   countAtPos(col - 1, row - 1, startX, startY);
 }
 
-void countAtPos(unsigned int col, unsigned int row, unsigned int startX, unsigned int startY)
-{
+void countAtPos(unsigned int col, unsigned int row, unsigned int startX, unsigned int startY) {
   unsigned int currentChar, currentColor, count;
 
   currentChar = getCharAt(startX + col, startY + row, 0);
