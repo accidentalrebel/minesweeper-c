@@ -21,3 +21,4 @@ struct Mine
 void countAtPos(unsigned int, unsigned int, unsigned int, unsigned int);
 void countAdjacentLines(struct Mine mine, unsigned int, unsigned int);
 int floodFill(unsigned int, unsigned int, unsigned int);
+int floodFillDirection(unsigned int, unsigned int);

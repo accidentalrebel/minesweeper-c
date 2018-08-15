@@ -152,32 +152,40 @@ int main() {
   return 0;
 }
 
+int floodFillDirection(unsigned int col, unsigned int row)
+{
+  unsigned int frontChar, backChar, currentColor, newCol, newRow;
+
+  newCol = col;
+  newRow = row;
+
+  frontChar = getCharAt(newCol, newRow, 0);
+  if ( frontChar == CHAR_BORDER || frontChar != CHAR_BLANK ) {
+    return 0;
+  }
+
+  backChar = getCharAt(newCol, newRow, 1);
+  currentColor = getColorAt(newCol, newRow, 1);
+  placeCharAt(backChar, currentColor, newCol, newRow, 1, 0);
+  
+  if ( backChar >= '0' && backChar <= '9' ) {
+    return 0;
+  }
+
+  floodFill(newCol, newRow, 0);
+}
+
 int floodFill(unsigned int col, unsigned int row, unsigned int recursiveIndex)
 {
-  unsigned int currentChar, currentColor, newCol, newRow;
-
   ++recursiveIndex;
   if ( recursiveIndex > BOARD_HEIGHT ) {
     return 0;
   }
-  
-  newCol = col;
-  newRow = row - 1;
-  
-  currentChar = getCharAt(newCol, newRow, 0);
-  if ( currentChar == CHAR_BORDER ) {
-    return 0;
-  }
 
-  currentChar = getCharAt(newCol, newRow, 1);
-  currentColor = getColorAt(newCol, newRow, 1);
-  placeCharAt(currentChar, currentColor, newCol, newRow, 1, 0);
-  
-  if ( currentChar >= '0' && currentChar <= '9' ) {
-    return 0;
-  }
-
-  return floodFill(newCol, newRow, recursiveIndex);
+  floodFillDirection(col, row - 1);
+  floodFillDirection(col + 1, row);
+  floodFillDirection(col, row + 1);
+  floodFillDirection(col - 1, row);
 }
 
 void countAdjacentLines(struct Mine mine, unsigned int startX, unsigned int startY) {
