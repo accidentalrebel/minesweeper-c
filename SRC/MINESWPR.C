@@ -85,43 +85,49 @@ int main() {
 	   && (row >= startY && row <= startY + BOARD_HEIGHT - 1)) {
 
 	currentChar = getCharAt(col, row, 0);
-      	if ( currentChar == CHAR_TILE ) {
-	  ++tilesOpenedCount;
-	}
-
-	/*
-	  Checks for win condition
-	 */
-	if ( tilesOpenedCount >= (BOARD_WIDTH * BOARD_HEIGHT) - mineCount ) {
-	  changeDisplayPage(0);
-	  printf("WIN CONDITION");
-	  break;
-	}
-	
-	currentChar = getCharAt(col, row, 1);
-	currentColor = getColorAt(col, row, 1);
-	placeCharAt(currentChar, currentColor, col, row, 1, 0);
-	showMouseCursor();
-
-	/*
-	  Handles if you clicked on a mine.
-	 */
-	if ( currentChar == CHAR_MINE ) {
-	  for ( i = 0 ; i < mineCount ; i++ ) {
-	    currentMine = mines[i];
+	if ( currentChar != CHAR_FLAG ) {
 	  
-	    col = currentMine.col;
-	    row = currentMine.row;
+	  if ( currentChar == CHAR_TILE ) {
+	    ++tilesOpenedCount;
+	  }
 
-	    currentChar = getCharAt(col + startX, row + startY, 1);
-	    currentColor = getColorAt(col + startX, row + startY, 1);
-	    placeCharAt(currentChar, currentColor, col + startX, row + startY, 1, 0);
+	  /*
+	    Checks for win condition
+	  */
+	  if ( tilesOpenedCount >= (BOARD_WIDTH * BOARD_HEIGHT) - mineCount ) {
+	    changeDisplayPage(0);
+	    printf("WIN CONDITION");
+	    break;
 	  }
 	
-	  break;
+	  currentChar = getCharAt(col, row, 1);
+	  currentColor = getColorAt(col, row, 1);
+	  placeCharAt(currentChar, currentColor, col, row, 1, 0);
+	  showMouseCursor();
+
+	  /*
+	    Handles if you clicked on a mine.
+	  */
+	  if ( currentChar == CHAR_MINE ) {
+	    for ( i = 0 ; i < mineCount ; i++ ) {
+	      currentMine = mines[i];
+	  
+	      col = currentMine.col;
+	      row = currentMine.row;
+
+	      currentChar = getCharAt(col + startX, row + startY, 1);
+	      currentColor = getColorAt(col + startX, row + startY, 1);
+	      placeCharAt(currentChar, currentColor, col + startX, row + startY, 1, 0);
+	    }
+	
+	    break;
+	  }
+	  else if ( !(currentChar >= '0' && currentChar <= '9') ) {
+	    floodFill(col, row, &tilesOpenedCount);
+	  }
 	}
-	else if ( !(currentChar >= '0' && currentChar <= '9') ) {
-	  floodFill(col, row, &tilesOpenedCount);
+	else {
+	  showMouseCursor();
 	}
       }
       else {
