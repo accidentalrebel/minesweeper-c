@@ -37,12 +37,12 @@ int main() {
 
   /* Draw the back board */
   for ( i = 0 ; i < BOARD_HEIGHT + 2 ; i++ ) {
-    placeCharAt(CHAR_BORDER, 0x78, startX - 1, startY + i - 1, BOARD_WIDTH + 2, 0);
+    placeCharAt(CHAR_BORDER, COLOR_BORDER, startX - 1, startY + i - 1, BOARD_WIDTH + 2, 0);
   }
 
   /* Draw the actual board */
   for ( i = 0 ; i < BOARD_HEIGHT ; i++ ){ 
-    placeCharAt(CHAR_TILE, 0x08, startX, startY + i, BOARD_WIDTH, 0);
+    placeCharAt(CHAR_TILE, COLOR_TILE, startX, startY + i, BOARD_WIDTH, 0);
   }
 
   currentSeed = getInitialSeed();
@@ -58,7 +58,7 @@ int main() {
 
       currentChar = getCharAt(startX + col, startY + row, 1);
       if ( currentChar != CHAR_MINE ) {
- 	placeCharAt(CHAR_MINE, 0x4F, startX + col, startY + row, 1, 1);
+ 	placeCharAt(CHAR_MINE, COLOR_MINE, startX + col, startY + row, 1, 1);
 	break;
       }
     }
@@ -143,7 +143,10 @@ int main() {
       printf("Current char: %u", currentChar);
       
       if ( currentChar == CHAR_TILE ) {
-	placeCharAt(CHAR_FLAG, 0x13, col, row, 1, 0);
+ 	placeCharAt(CHAR_FLAG, COLOR_FLAG, col, row, 1, 0);
+      }
+      else if ( currentChar == CHAR_FLAG ) {
+ 	placeCharAt(CHAR_TILE, COLOR_TILE, col, row, 1, 0);
       }
       
       showMouseCursor();
