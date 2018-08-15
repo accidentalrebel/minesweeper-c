@@ -120,7 +120,7 @@ int main() {
 	  break;
 	}
 	else if ( !(currentChar >= '0' && currentChar <= '9') ) {
-	  floodFill(col, row, 0);
+	  floodFill(col, row, &tilesOpenedCount);
 	}
       }
       else {
@@ -152,7 +152,7 @@ int main() {
   return 0;
 }
 
-int floodFillDirection(unsigned int col, unsigned int row)
+int floodFillDirection(unsigned int col, unsigned int row, unsigned int * tilesOpenedCount)
 {
   unsigned int frontChar, backChar, currentColor, newCol, newRow;
 
@@ -167,25 +167,22 @@ int floodFillDirection(unsigned int col, unsigned int row)
   backChar = getCharAt(newCol, newRow, 1);
   currentColor = getColorAt(newCol, newRow, 1);
   placeCharAt(backChar, currentColor, newCol, newRow, 1, 0);
+
+  ++(*tilesOpenedCount);
   
   if ( backChar >= '0' && backChar <= '9' ) {
     return 0;
   }
 
-  floodFill(newCol, newRow, 0);
+  floodFill(newCol, newRow, tilesOpenedCount);
 }
 
-int floodFill(unsigned int col, unsigned int row, unsigned int recursiveIndex)
+int floodFill(unsigned int col, unsigned int row, unsigned int * tilesOpenedCount)
 {
-  ++recursiveIndex;
-  if ( recursiveIndex > BOARD_HEIGHT ) {
-    return 0;
-  }
-
-  floodFillDirection(col, row - 1);
-  floodFillDirection(col + 1, row);
-  floodFillDirection(col, row + 1);
-  floodFillDirection(col - 1, row);
+  floodFillDirection(col, row - 1, tilesOpenedCount);
+  floodFillDirection(col + 1, row, tilesOpenedCount);
+  floodFillDirection(col, row + 1, tilesOpenedCount);
+  floodFillDirection(col - 1, row, tilesOpenedCount);
 }
 
 void countAdjacentLines(struct Mine mine, unsigned int startX, unsigned int startY) {
