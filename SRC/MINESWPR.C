@@ -8,7 +8,6 @@
 
 int main() {
   unsigned int i, col, row, currentChar, currentColor, mineCount, tilesOpenedCount;
-  unsigned long *pCurrentSeed = 0;
   unsigned long currentSeed;
 
   struct Mine mines[STARTING_MINE_COUNT];
@@ -47,13 +46,12 @@ int main() {
   }
 
   currentSeed = getInitialSeed();
-  pCurrentSeed = &currentSeed;
 
   for ( i = 0 ; i < mineCount ; i++ ) {
 
     while ( 1 ) {
-      col = randomRange(pCurrentSeed, 0, BOARD_WIDTH);
-      row = randomRange(pCurrentSeed, 0, BOARD_HEIGHT);
+      col = randomRange(&currentSeed, 0, BOARD_WIDTH);
+      row = randomRange(&currentSeed, 0, BOARD_HEIGHT);
       
       mines[i].col = col;
       mines[i].row = row;
@@ -95,9 +93,13 @@ int main() {
 	  ++tilesOpenedCount;
 	}
 
+	/*
+	  Checks for win condition
+	 */
 	if ( tilesOpenedCount >= (BOARD_WIDTH * BOARD_HEIGHT) - mineCount ) {
 	  changeDisplayPage(0);
 	  printf("WIN CONDITION");
+	  break;
 	}
 	
 	currentChar = getCharAt(col, row, 1);
@@ -105,6 +107,9 @@ int main() {
 	placeCharAt(currentChar, currentColor, col, row, 1, 0);
 	showMouseCursor();
 
+	/*
+	  Handles if you clicked on a mine.
+	 */
 	if ( currentChar == CHAR_MINE ) {
 	  for ( i = 0 ; i < mineCount ; i++ ) {
 	    currentMine = mines[i];
