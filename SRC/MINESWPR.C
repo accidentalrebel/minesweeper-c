@@ -42,7 +42,7 @@ int main() {
 
   /* Draw the actual board */
   for ( i = 0 ; i < BOARD_HEIGHT ; i++ ){ 
-    placeCharAt(CHAR_BLANK, 0x08, startX, startY + i, BOARD_WIDTH, 0);
+    placeCharAt(CHAR_TILE, 0x08, startX, startY + i, BOARD_WIDTH, 0);
   }
 
   currentSeed = getInitialSeed();
@@ -85,7 +85,7 @@ int main() {
 	   && (row >= startY && row <= startY + BOARD_HEIGHT - 1)) {
 
 	currentChar = getCharAt(col, row, 0);
-      	if ( currentChar == CHAR_BLANK ) {
+      	if ( currentChar == CHAR_TILE ) {
 	  ++tilesOpenedCount;
 	}
 
@@ -135,6 +135,17 @@ int main() {
     }
     else if ( getMouseButtonUp(1)) {
       changeDisplayPage(0);
+
+      getMouseCoordinate(&col, &row);
+      currentChar = getCharAt(col, row, 0);
+
+      placeCursorAt(0, 0, 0);
+      printf("Current char: %u", currentChar);
+      
+      if ( currentChar == CHAR_TILE ) {
+	placeCharAt(CHAR_FLAG, 0x13, col, row, 1, 0);
+      }
+      
       showMouseCursor();
     }
   }
@@ -152,7 +163,7 @@ int floodFillDirection(unsigned int col, unsigned int row, unsigned int * tilesO
   newRow = row;
 
   frontChar = getCharAt(newCol, newRow, 0);
-  if ( frontChar == CHAR_BORDER || frontChar != CHAR_BLANK ) {
+  if ( frontChar == CHAR_BORDER || frontChar != CHAR_TILE ) {
     return 0;
   }
 
