@@ -135,26 +135,28 @@ int main() {
       }
     }
 
-    if ( getMouseButtonDown(1) ) {
-      hideMouseCursor();
+    if ( getMouseButtonDown(2) ) {
       changeDisplayPage(1);
     }
-    else if ( getMouseButtonUp(1)) {
+    else if ( getMouseButtonUp(2) ) {
       changeDisplayPage(0);
+    }
 
+    if ( getMouseButtonDown(1)) {
+      hideMouseCursor();
+    }
+    else if ( getMouseButtonUp(1)) {
       getMouseCoordinate(&col, &row);
+      
       currentChar = getCharAt(col, row, 0);
 
-      placeCursorAt(0, 0, 0);
-      printf("Current char: %u", currentChar);
-      
       if ( currentChar == CHAR_TILE ) {
  	placeCharAt(CHAR_FLAG, COLOR_FLAG, col, row, 1, 0);
       }
       else if ( currentChar == CHAR_FLAG ) {
  	placeCharAt(CHAR_TILE, COLOR_TILE, col, row, 1, 0);
       }
-      
+
       showMouseCursor();
     }
   }

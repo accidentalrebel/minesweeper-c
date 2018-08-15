@@ -10,7 +10,7 @@
 #define STARTING_MINE_COUNT 150
 #define CHAR_MINE 232
 #define CHAR_FLAG 20
-#define CHAR_BORDER 0xF0
+#define CHAR_BORDER 240
 #define CHAR_TILE 254
 
 #define COLOR_BORDER 0x78
